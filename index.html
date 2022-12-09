@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        #map {
+            width: 675px;
+            height: 541px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/OtrosServicios_1.js"></script>
+        <script src="data/ServiciosEmergencia_2.js"></script>
+        <script src="data/grandes_comercios_3.js"></script>
+        <script src="data/Comuna_Casablanca_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-33.51174247342665,-71.73166087631311],[-33.132727502798474,-71.17371835269033]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_OtrosServicios_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Tipo'] !== null ? autolinker.link(feature.properties['Tipo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_OtrosServicios_1_0(feature) {
+            switch(String(feature.properties['Tipo'])) {
+                case 'Bancario':
+                    return {
+                pane: 'pane_OtrosServicios_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(173,238,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Supermercado':
+                    return {
+                pane: 'pane_OtrosServicios_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(106,162,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_OtrosServicios_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,55,135,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_OtrosServicios_1');
+        map.getPane('pane_OtrosServicios_1').style.zIndex = 401;
+        map.getPane('pane_OtrosServicios_1').style['mix-blend-mode'] = 'normal';
+        var layer_OtrosServicios_1 = new L.geoJson(json_OtrosServicios_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_OtrosServicios_1',
+            layerName: 'layer_OtrosServicios_1',
+            pane: 'pane_OtrosServicios_1',
+            onEachFeature: pop_OtrosServicios_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_OtrosServicios_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_OtrosServicios_1);
+        map.addLayer(layer_OtrosServicios_1);
+        function pop_ServiciosEmergencia_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Tipo'] !== null ? autolinker.link(feature.properties['Tipo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ServiciosEmergencia_2_0(feature) {
+            switch(String(feature.properties['Tipo'])) {
+                case 'Bomberos':
+                    return {
+                pane: 'pane_ServiciosEmergencia_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,26,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Carabineros':
+                    return {
+                pane: 'pane_ServiciosEmergencia_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,160,44,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Servicio Salud':
+                    return {
+                pane: 'pane_ServiciosEmergencia_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,8,174,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_ServiciosEmergencia_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(28,198,228,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ServiciosEmergencia_2');
+        map.getPane('pane_ServiciosEmergencia_2').style.zIndex = 402;
+        map.getPane('pane_ServiciosEmergencia_2').style['mix-blend-mode'] = 'normal';
+        var layer_ServiciosEmergencia_2 = new L.geoJson(json_ServiciosEmergencia_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ServiciosEmergencia_2',
+            layerName: 'layer_ServiciosEmergencia_2',
+            pane: 'pane_ServiciosEmergencia_2',
+            onEachFeature: pop_ServiciosEmergencia_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ServiciosEmergencia_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ServiciosEmergencia_2);
+        map.addLayer(layer_ServiciosEmergencia_2);
+        function pop_grandes_comercios_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Tipo'] !== null ? autolinker.link(feature.properties['Tipo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_grandes_comercios_3_0() {
+            return {
+                pane: 'pane_grandes_comercios_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,113,72,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_grandes_comercios_3');
+        map.getPane('pane_grandes_comercios_3').style.zIndex = 403;
+        map.getPane('pane_grandes_comercios_3').style['mix-blend-mode'] = 'normal';
+        var layer_grandes_comercios_3 = new L.geoJson(json_grandes_comercios_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_grandes_comercios_3',
+            layerName: 'layer_grandes_comercios_3',
+            pane: 'pane_grandes_comercios_3',
+            onEachFeature: pop_grandes_comercios_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_grandes_comercios_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_grandes_comercios_3);
+        map.addLayer(layer_grandes_comercios_3);
+        function pop_Comuna_Casablanca_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['objectid'] !== null ? autolinker.link(feature.properties['objectid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['shape_leng'] !== null ? autolinker.link(feature.properties['shape_leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dis_elec'] !== null ? autolinker.link(feature.properties['dis_elec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cir_sena'] !== null ? autolinker.link(feature.properties['cir_sena'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_comuna'] !== null ? autolinker.link(feature.properties['cod_comuna'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['codregion'] !== null ? autolinker.link(feature.properties['codregion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['st_area_sh'] !== null ? autolinker.link(feature.properties['st_area_sh'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['st_length_'] !== null ? autolinker.link(feature.properties['st_length_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Region'] !== null ? autolinker.link(feature.properties['Region'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Comuna'] !== null ? autolinker.link(feature.properties['Comuna'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Provincia'] !== null ? autolinker.link(feature.properties['Provincia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Comuna_Casablanca_4_0() {
+            return {
+                pane: 'pane_Comuna_Casablanca_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Comuna_Casablanca_4');
+        map.getPane('pane_Comuna_Casablanca_4').style.zIndex = 404;
+        map.getPane('pane_Comuna_Casablanca_4').style['mix-blend-mode'] = 'normal';
+        var layer_Comuna_Casablanca_4 = new L.geoJson(json_Comuna_Casablanca_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Comuna_Casablanca_4',
+            layerName: 'layer_Comuna_Casablanca_4',
+            pane: 'pane_Comuna_Casablanca_4',
+            onEachFeature: pop_Comuna_Casablanca_4,
+            style: style_Comuna_Casablanca_4_0,
+        });
+        bounds_group.addLayer(layer_Comuna_Casablanca_4);
+        map.addLayer(layer_Comuna_Casablanca_4);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Comuna_Casablanca_4.png" /> Comuna_Casablanca': layer_Comuna_Casablanca_4,'<img src="legend/grandes_comercios_3.png" /> grandes_comercios': layer_grandes_comercios_3,'ServiciosEmergencia<br /><table><tr><td style="text-align: center;"><img src="legend/ServiciosEmergencia_2_Bomberos0.png" /></td><td>Bomberos</td></tr><tr><td style="text-align: center;"><img src="legend/ServiciosEmergencia_2_Carabineros1.png" /></td><td>Carabineros</td></tr><tr><td style="text-align: center;"><img src="legend/ServiciosEmergencia_2_ServicioSalud2.png" /></td><td>Servicio Salud</td></tr><tr><td style="text-align: center;"><img src="legend/ServiciosEmergencia_2_Noespecificados3.png" /></td><td>No especificados</td></tr></table>': layer_ServiciosEmergencia_2,'OtrosServicios<br /><table><tr><td style="text-align: center;"><img src="legend/OtrosServicios_1_Bancario0.png" /></td><td>Bancario</td></tr><tr><td style="text-align: center;"><img src="legend/OtrosServicios_1_Supermercado1.png" /></td><td>Supermercado</td></tr><tr><td style="text-align: center;"><img src="legend/OtrosServicios_1_2.png" /></td><td></td></tr></table>': layer_OtrosServicios_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
